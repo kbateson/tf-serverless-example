@@ -1,0 +1,23 @@
+service: tf-serverless-example
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-west-2
+
+package:
+ include:
+   - backend/handler.js
+ exclude:
+   - tf/**
+   - .gitignore
+   - my-app/**
+
+functions:
+  getDogs:
+   handler: backend/handler.getDogs
+   events:
+     - http:
+         path: dogs
+         method: get
