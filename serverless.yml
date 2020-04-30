@@ -21,3 +21,10 @@ functions:
      - http:
          path: dogs
          method: get
+
+  getDogById:
+   handler: backend/handler.getDogById
+   events:
+     - http:
+         path: dogs/{dogId}
+         method: get

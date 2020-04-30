@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Dogs from './Dogs.js';
+const baseUrl = 'https://cax8xrcb2j.execute-api.us-west-2.amazonaws.com/dev';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+class App extends Component {
+  constructor() {
+    super();
+    this.state = { dogs: [] }
+  }
+  async componentDidMount() {
+    const response = await fetch(`${baseUrl}/dogs`);
+    if (response.ok) {
+      const json = await response.json();
+      this.setState({ dogs: json.dogs });
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Dogbook
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        </header>
+        <Dogs dogs={this.state.dogs} />
+      </div>
+    );
+  }
 }
 
 export default App;
