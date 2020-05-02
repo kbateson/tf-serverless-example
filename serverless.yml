@@ -28,3 +28,11 @@ functions:
      - http:
          path: dogs/{dogId}
          method: get
+
+  createDog:
+   handler: backend/handler.createDog
+   events:
+     - http:
+         path: dogs
+         method: post
+          
