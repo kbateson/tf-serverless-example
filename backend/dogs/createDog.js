@@ -1,9 +1,11 @@
 const uuid = require('uuid');
 
 async function createDog (dynamo, s3, event, context) {
-    const imageName = `dogs/images/${uuid.v4()}.png`;
+    const dogId = uuid.v4()
+    const imageName = `dogs/images/${dogId}.png`;
     const body = JSON.parse(event.body);
     let dog = body.dog;
+    dog.dogId = dogId;
     dog.imagePath = imageName;
     const dynamoResponse = await dynamo.put({ TableName: 'dogs', Item: dog }).promise();
     const s3Response = await s3.getSignedUrlPromise('putObject', {
