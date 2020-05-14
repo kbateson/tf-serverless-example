@@ -14,3 +14,7 @@ resource "aws_dynamodb_table" "dogs" {
     type = "S"
   }
 }
+
+resource "aws_s3_bucket" "dogbook-files" {
+  bucket = "dogbook-files"
+}

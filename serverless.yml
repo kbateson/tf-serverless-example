@@ -17,6 +17,8 @@ package:
 functions:
   getDogs:
    handler: backend/handler.getDogs
+   include:
+    - backend/dogs/getDogs.js
    events:
      - http:
          path: dogs
@@ -24,6 +26,8 @@ functions:
 
   getDogById:
    handler: backend/handler.getDogById
+   include:
+    - backend/dogs/getDogById.js
    events:
      - http:
          path: dogs/{dogId}
@@ -31,6 +35,8 @@ functions:
 
   createDog:
    handler: backend/handler.createDog
+   include:
+    - backend/dogs/createDog.js
    events:
      - http:
          path: dogs

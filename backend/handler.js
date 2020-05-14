@@ -1,52 +1,13 @@
-module.exports.getDogs = async function (event, context) {
-    const AWS = require('aws-sdk');
-    const dynamo = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
-    let request = { 
-        TableName: 'dogs'};
-    if(event.queryStringParameters && event.queryStringParameters.breed){
-        request.FilterExpression= "#breed = :val"; 
-        request.ExpressionAttributeValues= {":val": event.queryStringParameters.breed};
-        request.ExpressionAttributeNames= {
-            '#breed': 'breed'
-        };
-    }
-        
-    const response = await dynamo.scan(request).promise();
-    console.log(response);
-    return {
-        statusCode: 200,
-        body: JSON.stringify(
-            {
-                dogs: response.Items
-            },
-            null,
-            2
-        ),
-    }
-}
+const AWS = require('aws-sdk');
+const dynamo = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+const s3 = new AWS.S3();
 
-module.exports.getDogById = async function (event, context) {
-    const AWS = require('aws-sdk');
-    const dynamo = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
-    const response = await dynamo.get({ TableName: 'dogs', Key: { dogId: event.pathParameters.dogId } }).promise();
-    return {
-        statusCode: 200,
-        body: JSON.stringify(
-            {
-                dog: response.Item
-            },
-            null,
-            2
-        ),
-    }
-}
+const getDogs = require('./dogs/getDogs').getDogs;
+const getDogById = require('./dogs/getDogById').getDogById;
+const createDog = require('./dogs/createDog').createDog;
 
-module.exports.createDog = async function (event, context) {
-    const AWS = require('aws-sdk');
-    const dynamo = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
-    const response = await dynamo.put({TableName: 'dogs', Item: JSON.parse(event.body).dog}).promise();
-    console.log(response.response);
-    return {
-        statusCode: 201,
-    }
-}
+module.exports.getDogs = async (event, context) => await getDogs(dynamo, event, context);
+
+module.exports.getDogById = async (event, context) => await getDogById(dynmo, event, context);
+
+module.exports.createDog = async (event, context) => await createDog(dynamo, s3, event, context);

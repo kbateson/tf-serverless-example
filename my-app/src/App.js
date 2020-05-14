@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dogs from './Dogs.js';
+import CreateDog from './CreateDog.js';
 const baseUrl = 'https://cax8xrcb2j.execute-api.us-west-2.amazonaws.com/dev';
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
             Dogbook
         </p>
         </header>
+        <CreateDog />
         <Dogs dogs={this.state.dogs} />
       </div>
     );
