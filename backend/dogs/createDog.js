@@ -16,6 +16,10 @@ async function createDog(dynamo, s3, event, context) {
     console.log(dynamoResponse.response);
     return {
         statusCode: 201,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true
+        },
         body: JSON.stringify({
             uploadUrl: s3Response
         })

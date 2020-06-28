@@ -3,6 +3,7 @@ service: tf-serverless-example
 provider:
   name: aws
   runtime: nodejs12.x
+  profile: nookwill # change this to your profile
   stage: dev
   region: us-west-2
 
@@ -23,6 +24,7 @@ functions:
      - http:
          path: dogs
          method: get
+         cors: true
 
   getDogById:
    handler: backend/handler.getDogById
@@ -32,6 +34,7 @@ functions:
      - http:
          path: dogs/{dogId}
          method: get
+         cors: true
 
   createDog:
    handler: backend/handler.createDog
@@ -41,4 +44,5 @@ functions:
      - http:
          path: dogs
          method: post
+         cors: true
           

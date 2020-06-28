@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
-const baseUrl = 'https://cax8xrcb2j.execute-api.us-west-2.amazonaws.com/dev';
+const baseUrl = 'https://9t51w2sud0.execute-api.us-west-2.amazonaws.com/dev';
 
 export default class CreateDog extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class CreateDog extends Component {
 
     async onSubmit(event) {
         let file = this.fileInput.current.files[0];
-      
+
         console.log(file);
         let response = await fetch(`${baseUrl}/dogs`,
             {
@@ -38,7 +38,10 @@ export default class CreateDog extends Component {
             let imgRes = await fetch(resJSON.uploadUrl,
                 {
                     method: "PUT",
-                    headers: { 'Content-Type': file.type },
+                    headers: {
+                        'Content-Type': file.type,
+                        'Access-Control-Allow-Origin': '*'
+                    },
                     body: file
                 });
             console.log("hello " + JSON.stringify(imgRes));
