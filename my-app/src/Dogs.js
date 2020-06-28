@@ -3,7 +3,6 @@ import Dog from './Dog.js';
 
 export default class Dogs extends Component {
     render() {
-        console.log(this.props.dogs);
         if(this.props.dogs.length > 0)
         return (
             <div>

@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-async function createDog (dynamo, s3, event, context) {
+async function createDog(dynamo, s3, event, context) {
     const dogId = uuid.v4()
     const imageName = `dogs/images/${dogId}.png`;
     const body = JSON.parse(event.body);
